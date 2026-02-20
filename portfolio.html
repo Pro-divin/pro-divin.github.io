@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murenzi Divin | Software Engineer | Web & Mobile Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Code+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0d9488;  /* Deep teal */
+      --secondary: #2563eb; /* Royal blue */
+      --accent: #f59e0b;   /* Vibrant gold */
+      --dark: #0f172a;     /* Navy blue */
+      --darker: #020617;   /* Near black */
+      --light: #f8fafc;    /* Bright white */
+      --gray: #64748b;     /* Cool gray */
+      --dark-gray: #1e293b; /* Dark slate */
+      --code-green: #10b981;
+      --code-blue: #3b82f6;
+      --code-purple: #8b5cf6;
+      --code-yellow: #f59e0b;
+      --code-red: #ef4444;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      background-color: var(--darker);
+      padding-top: 80px; /* Space for fixed navbar */
+    }
+    
+    /* IDE Background Effect */
+    .code-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.08;
+      background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.7) contrast(1.2);
+    }
+    
+    .terminal-cursor {
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      background-color: var(--code-green);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+    
+    @keyframes blink {
+      from, to { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    ::selection {
+      background: var(--accent);
+      color: var(--dark);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+      box-shadow: 0 2px 20px rgba(2, 6, 23, 0.7);
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--light);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo span {
+      color: var(--accent);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    
+    .nav-links a:hover {
+      color: var(--light);
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 5rem 0 3rem;
+      position: relative;
+    }
+    
+    .profile-container {
+      width: 220px;
+      height: 220px;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      padding: 6px;
+      position: relative;
+      box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4);
+      animation: pulse 4s infinite;
+      transition: all 0.5s ease;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(5px);
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4); }
+      70% { box-shadow: 0 0 0 15px rgba(13, 148, 136, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
+    }
+    
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      filter: contrast(110%) saturate(90%);
+      transition: all 0.4s ease;
+      border: 2px solid rgba(245, 158, 11, 0.3);
+    }
+    
+    .profile-img:hover {
+      filter: contrast(120%) saturate(120%);
+      transform: scale(1.05);
+    }
+    
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 0.3s;
+      letter-spacing: -0.5px;
+    }
+    
+    .title {
+      font-size: 1.3rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 0.6s;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+    
+    .title span {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Section Styles */
+    section {
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: calc(var(--order) * 0.15s + 0.9s);
+      scroll-margin-top: 100px; /* For anchor links to account for fixed header */
+    }
+    
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: transparent;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+      letter-spacing: -0.5px;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    /* Card Styles */
+    .card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      backdrop-filter: blur(8px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      box-shadow: 0 10px 30px -15px rgba(2, 6, 23, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(37, 99, 235, 0.1),
+        transparent
+      );
+      transition: 0.5s;
+    }
+    
+    .card:hover::before {
+      left: 100%;
+    }
+    
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px -15px rgba(37, 99, 235, 0.3);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+    
+    /* List Styles */
+    .skills-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+    
+    .skills-list li {
+      padding: 1rem 1.2rem;
+      background: rgba(30, 41, 59, 0.5);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+      font-family: 'Source Code Pro', monospace;
+    }
+    
+    .skills-list li:hover {
+      background: rgba(13, 148, 136, 0.1);
+      transform: translateX(8px);
+      border-left: 3px solid var(--accent);
+    }
+    
+    .skills-list li::before {
+      content: '▹';
+      color: var(--accent);
+      margin-right: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    /* Projects Styles */
+    .projects-list {
+      list-style: none;
+    }
+    
+    .project-item {
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .project-item:last-child {
+      border-bottom: none;
+    }
+    
+    .project-item:hover {
+      border-bottom-color: var(--primary);
+    }
+    
+    .project-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+    }
+    
+    .project-title::before {
+      content: '»';
+      color: var(--accent);
+      margin-right: 0.8rem;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .project-item:hover .project-title::before {
+      transform: translateX(5px);
+    }
+    
+    .project-desc {
+      color: var(--gray);
+      margin-bottom: 1.2rem;
+      line-height: 1.8;
+      padding-left: 2rem;
+    }
+    
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      padding-left: 2rem;
+    }
+    
+    .tech-tag {
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--secondary);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      font-family: 'Source Code Pro', monospace;
+    }
+    
+    .tech-tag:hover {
+      background: rgba(37, 99, 235, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* Code Block Styles */
+    .code-block {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .code-keyword {
+      color: var(--code-purple);
+    }
+    
+    .code-type {
+      color: var(--code-blue);
+    }
+    
+    .code-string {
+      color: var(--code-green);
+    }
+    
+    .code-comment {
+      color: var(--gray);
+      font-style: italic;
+    }
+    
+    .code-number {
+      color: var(--code-yellow);
+    }
+    
+    /* Project Link Styles */
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 2rem;
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+    
+    .project-link:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+    
+    .project-link i {
+      margin-right: 0.5rem;
+    }
+    
+    /* Education Styles */
+    .education-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+    }
+    
+    .education-item:last-child {
+      border-bottom: none;
+    }
+    
+    .education-degree {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+    
+    .education-institution {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    
+    .education-period {
+      color: var(--gray);
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+    
+    .education-desc {
+      color: var(--gray);
+      line-height: 1.7;
+      padding-left: 1rem;
+    }
+    
+    /* CV Download Button */
+    .cv-download {
+      display: inline-block;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+    }
+    
+    .cv-download:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
+    }
+    
+    .cv-download i {
+      margin-right: 0.5rem;
+    }
+    
+    /* Contact Styles */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .social-link {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(30, 41, 59, 0.7);
+      color: var(--gray);
+      font-size: 1.8rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(100, 116, 139, 0.2);
+    }
+    
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(13, 148, 136, 0.1), transparent);
+      transition: all 0.6s ease;
+    }
+    
+    .social-link:hover {
+      background: var(--dark-gray);
+      color: var(--accent);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.2);
+    }
+    
+    .social-link:hover::before {
+      left: 100%;
+    }
+    
+    /* Terminal Effect */
+    .terminal-line {
+      font-family: 'Source Code Pro', monospace;
+      color: var(--code-green);
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: terminal-type 0.5s forwards;
+      animation-delay: calc(var(--line-index) * 0.2s + 1s);
+    }
+    
+    @keyframes terminal-type {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .terminal-prompt {
+      color: var(--code-blue);
+    }
+    
+    .terminal-command {
+      color: var(--code-yellow);
+    }
+    
+    .terminal-output {
+      color: var(--code-green);
+    }
+    
+    /* Testimonials */
+    .testimonials-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .testimonial-card {
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.2);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+      position: relative;
+    }
+    
+    .testimonial-text::before,
+    .testimonial-text::after {
+      content: '"';
+      color: var(--accent);
+      font-size: 1.5rem;
+      line-height: 0;
+    }
+    
+    .testimonial-text::before {
+      vertical-align: top;
+      margin-right: 0.3rem;
+    }
+    
+    .testimonial-text::after {
+      vertical-align: bottom;
+      margin-left: 0.3rem;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .testimonial-author-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 1rem;
+      border: 2px solid var(--accent);
+    }
+    
+    .testimonial-author-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .testimonial-author-name {
+      font-weight: 600;
+      color: var(--light);
+    }
+    
+    .testimonial-author-title {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 4rem 0 3rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+      position: relative;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+    
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-accent {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 5px 15px rgba(13, 148, 136, 0.4);
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-5px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding-top: 70px;
+      }
+      
+      h1 {
+        font-size: 2.4rem;
+      }
+      
+      .title {
+        font-size: 1.1rem;
+      }
+      
+      .skills-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .container {
+        padding: 0 1.5rem;
+      }
+      
+      .card {
+        padding: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .code-background {
+        opacity: 0.05;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        gap: 1.5rem;
+        transform: translateY(-150%);
+        transition: transform 0.4s ease;
+        z-index: 999;
+      }
+      
+      .nav-links.active {
+        transform: translateY(0);
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- IDE Background -->
+  <div class="code-background"></div>
+  
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="logo">Divin<span>.</span></a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <header>
+      <div class="profile-container">
+        <img src="profile.jpeg" alt="Murenzi Divin" class="profile-img">
+      </div>
+      <h1>MURENZI Divin</h1>
+      <p class="title">
+        <span>Software Engineer</span> | Web & Mobile Developer | 
+        Secure Systems & DevOps Architect | Cybersecurity Practitioner
+      </p>
+      
+      <!-- Terminal Animation -->
+      <div style="max-width: 800px; margin: 2rem auto; background: rgba(15, 23, 42, 0.7); border-radius: 8px; padding: 1.5rem; font-family: 'Source Code Pro', monospace; border: 1px solid rgba(100, 116, 139, 0.2);">
+        <div class="terminal-line" style="--line-index: 0;">
+          <span class="terminal-prompt">divin@software-engineer:~$</span> <span class="terminal-command">whoami</span>
+        </div>
+        <div class="terminal-line" style="--line-index: 1;">
+          <span class="terminal-output">Murenzi Divin - Software Engineer | Web & Mobile Developer</span>
+        </div>
+        <div class="terminal-line" style="--line-index: 2;">
+          <span class="terminal-prompt">divin@software-engineer:~$</span> <span class="terminal-command">cat skills.txt</span>
+        </div>
+        <div class="terminal-line" style="--line-index: 3;">
+          <span class="terminal-output">HTML | CSS | JavaScript | React | Python | Django | Flutter | Dart | MySQL | PostgreSQL</span>
+        </div>
+        <div class="terminal-line" style="--line-index: 4;">
+          <span class="terminal-prompt">divin@software-engineer:~$</span> <span class="terminal-command"><span class="terminal-cursor"></span></span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="profile" style="--order: 1;">
+        <h2>My Profile</h2>
+        <div class="card">
+          <p style="margin-bottom: 1.5rem; line-height: 1.9;">
+            I am a Software Engineer specialized in web technologies and mobile development.
+            I have advanced expertise in cybersecurity, focusing on penetration testing and securing systems.
+          </p>
+          <p style="margin-bottom: 1.5rem; line-height: 1.9;">
+            I build high-performance, user-friendly applications that solve real-world problems.
+            I am ready to contribute to innovative software projects and deliver results.
+          </p>
+
+          <!-- Personal Details -->
+          <div style="margin-top: 2rem;">
+            <h3 style="color: var(--accent); margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+              <i class="fas fa-user" style="margin-right: 0.5rem;"></i>Personal Details
+            </h3>
+            <ul class="skills-list" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+              <li>Nationality: Rwandan</li>
+              <li>Gender: Male</li>
+            </ul>
+          </div>
+
+          <!-- Languages -->
+          <div style="margin-top: 2rem;">
+            <h3 style="color: var(--accent); margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+              <i class="fas fa-language" style="margin-right: 0.5rem;"></i>Languages
+            </h3>
+            <ul class="skills-list" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+              <li>English: Fluently</li>
+              <li>Swahili: Good</li>
+              <li>Kinyarwanda: Fluent</li>
+            </ul>
+          </div>
+
+          <!-- Testimonials Section -->
+          <div style="margin-top: 3rem;">
+            <h3 style="color: var(--accent); margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+              <i class="fas fa-quote-left" style="margin-right: 0.5rem;"></i>What People Say
+            </h3>
+            <div class="testimonials-container">
+              <div class="testimonial-card">
+                <p class="testimonial-text">
+                  Divin demonstrated exceptional problem-solving skills during our project collaboration. His ability to implement secure coding practices while maintaining high performance was impressive.
+                </p>
+                <div class="testimonial-author">
+                  <div class="testimonial-author-info">
+                    <span class="testimonial-author-name">Phn Hugo Sano</span>
+                    <span class="testimonial-author-title">CEO, Kasah Technologies Rwanda.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <p class="testimonial-text">
+                  The security architecture Divin implemented for our platform significantly reduced vulnerabilities. His attention to detail and proactive approach to security is commendable.
+                </p>
+                <div class="testimonial-author">
+                  <div class="testimonial-author-info">
+                    <span class="testimonial-author-name">Bosco Shyaka</span>
+                    <span class="testimonial-author-title">Product Manager, Save the Youth</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education" style="--order: 2;">
+        <h2>Education</h2>
+        <div class="card">
+          <div class="education-item">
+            <h3 class="education-degree">Bachelor's Degree in Computing and Information Science</h3>
+            <div class="education-institution">University of Lay Adventists of Kigali (UNILAK)</div>
+            <div class="education-period">Department of Software Engineering</div>
+            <p class="education-desc">
+              Pursuing a Bachelor's Degree in the Faculty of Computing and Information Science,
+              Department of Software Engineering. Focused on software development principles,
+              web and mobile technologies, database systems, and cybersecurity practices.
+            </p>
+          </div>
+          
+          <a href="images/CV_clean_casual.pdf" download class="cv-download">
+            <i class="fas fa-download"></i> Download My CV
+          </a>
+        </div>
+      </section>
+
+      <section id="skills" style="--order: 3;">
+        <h2>Skills Arsenal</h2>
+        <div class="card">
+          <h3 style="color: var(--accent); margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+            <i class="fas fa-globe" style="margin-right: 0.5rem;"></i>Web Development
+          </h3>
+          <ul class="skills-list">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript (React)</li>
+            <li>Python</li>
+            <li>Django</li>
+          </ul>
+          
+          <h3 style="color: var(--accent); margin-top: 2rem; margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+            <i class="fas fa-mobile-alt" style="margin-right: 0.5rem;"></i>Mobile Development (Android & iOS)
+          </h3>
+          <ul class="skills-list">
+            <li>Flutter</li>
+            <li>Dart</li>
+          </ul>
+
+          <h3 style="color: var(--accent); margin-top: 2rem; margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+            <i class="fas fa-database" style="margin-right: 0.5rem;"></i>Database
+          </h3>
+          <ul class="skills-list">
+            <li>MySQL</li>
+            <li>PostgreSQL</li>
+            <li>SQLite</li>
+            <li>Firebase</li>
+          </ul>
+
+          <h3 style="color: var(--accent); margin-top: 2rem; margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+            <i class="fas fa-shield-alt" style="margin-right: 0.5rem;"></i>Cybersecurity
+          </h3>
+          <ul class="skills-list">
+            <li>CyberSec First Responder</li>
+            <li>Penetration Testing</li>
+            <li>Securing Systems</li>
+            <li>Digital Forensics</li>
+          </ul>
+          
+          <h3 style="color: var(--accent); margin-top: 2rem; margin-bottom: 1.5rem; font-weight: 500; font-size: 1.2rem;">
+            <i class="fas fa-cogs" style="margin-right: 0.5rem;"></i>Other Skills
+          </h3>
+          <ul class="skills-list">
+            <li>Git (Version Control)</li>
+            <li>Power BI (Data Analysis)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="projects" style="--order: 4;">
+        <h2>My Work (Coding Projects)</h2>
+        <div class="card">
+          <ul class="projects-list">
+            <li class="project-item">
+              <h3 class="project-title">Rwanda Crime Report System (RRS)</h3>
+              <p class="project-desc">
+                Rwanda Crime Report System (RRS) securely records crime reports using IPFS for decentralized storage and the Cardano blockchain for immutable verification. It ensures tamper-proof evidence, transparency, and trustworthy reporting for public safety.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Cardano Blockchain</span>
+                <span class="tech-tag">IPFS</span>
+                <span class="tech-tag">Decentralized Storage</span>
+                <span class="tech-tag">Smart Contracts</span>
+                <span class="tech-tag">Security</span>
+              </div>
+            </li>
+            <li class="project-item">
+              <h3 class="project-title">Umuganda Attendance & Fines Tracking System</h3>
+              <p class="project-desc">
+                Built a system to track community participation in Rwanda's monthly Umuganda activities. Features include attendance registration, absence tracking, fine calculation and management, and reporting dashboards for local authorities.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Django</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">REST API</span>
+                <span class="tech-tag">Dashboard</span>
+              </div>
+            </li>
+            <li class="project-item">
+              <h3 class="project-title">E-Commerce Platform (Django)</h3>
+              <p class="project-desc">
+                Developed a full-featured e-commerce web application with product catalog, shopping cart, user authentication, order management, and payment integration. Built with Django for a robust and scalable backend.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Django</span>
+                <span class="tech-tag">HTML/CSS</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Payment Integration</span>
+              </div>
+            </li>
+            <li class="project-item">
+              <h3 class="project-title">UNILAK Claiming System</h3>
+              <p class="project-desc">
+                Created a web-based claiming system for the University of Lay Adventists of Kigali (UNILAK) that allows students to submit and track academic claims such as grade disputes, missing marks, and administrative requests. Features role-based access for students, lecturers, and administrators.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Web Development</span>
+                <span class="tech-tag">Django</span>
+                <span class="tech-tag">Database</span>
+                <span class="tech-tag">Authentication</span>
+                <span class="tech-tag">Role-Based Access</span>
+              </div>
+            </li>
+            <li class="project-item">
+              <h3 class="project-title">Wi-Fi Signal Strength Detection & Network Selection Dashboard</h3>
+              <p class="project-desc">
+                Built a dashboard application that detects available Wi-Fi networks, measures their signal strength in real-time, and recommends the optimal network for connection. Provides a visual interface for monitoring network quality and making informed selection decisions.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Networking</span>
+                <span class="tech-tag">Dashboard</span>
+                <span class="tech-tag">Signal Analysis</span>
+                <span class="tech-tag">Real-Time Monitoring</span>
+              </div>
+            </li>
+            <li class="project-item">
+              <h3 class="project-title">Pet Store Marketplace (Mobile App)</h3>
+              <p class="project-desc">
+                A full-featured e-commerce mobile application built with Flutter for Android devices. Users can browse and purchase a wide range of products including clothes, food, furniture, perfumes, and flowers. Features a beautiful, intuitive UI with product categories, search, shopping cart, order management, and a seamless checkout experience — a complete marketplace in your pocket.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Flutter</span>
+                <span class="tech-tag">Dart</span>
+                <span class="tech-tag">Firebase</span>
+                <span class="tech-tag">E-Commerce</span>
+                <span class="tech-tag">Android</span>
+                <span class="tech-tag">UI/UX</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="experience" style="--order: 5;">
+        <h2>Experience</h2>
+        <div class="card">
+          <ul class="projects-list">
+            <li class="project-item">
+              <h3 class="project-title">Blockchain Developer — ICP Rwanda Hackathon</h3>
+              <p class="project-desc">
+                <strong>2024 - 2025 (Competition)</strong><br>
+                Participated in the ICP Rwanda Hackathon as a blockchain developer, building decentralized applications and smart contracts on the Internet Computer Protocol.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Blockchain</span>
+                <span class="tech-tag">ICP</span>
+                <span class="tech-tag">Smart Contracts</span>
+                <span class="tech-tag">Decentralized Apps</span>
+              </div>
+            </li>
+            <li class="project-item">
+              <h3 class="project-title">Software Developer — ICT CHAMBER Hackathon</h3>
+              <p class="project-desc">
+                <strong>2025 (Competition)</strong><br>
+                Competed in the ICT CHAMBER hackathon as a software developer, building innovative software solutions to address real-world challenges in Rwanda.
+              </p>
+              <div class="tech-tags">
+                <span class="tech-tag">Software Development</span>
+                <span class="tech-tag">Web Development</span>
+                <span class="tech-tag">Innovation</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="awards" style="--order: 6;">
+        <h2>Awards & Certificates</h2>
+        <div class="card">
+          <ul class="skills-list">
+            <li>Advanced Software Development — DTP (Digital Talent Program)</li>
+            <li>HUAWEI Certificate</li>
+            <li>CyberOps — CISCO Training</li>
+            <li>Advanced Cybersecurity — DTP (Digital Talent Program), Rwanda (2024-2025)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="contact" style="--order: 7;">
+        <h2>Connect With Me</h2>
+        <div class="card" style="text-align: center;">
+          <p style="margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.9; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Interested in web & mobile development, cybersecurity, or innovative software projects?<br>
+            Reach out through any of these channels:
+          </p>
+          <div style="margin-bottom: 2rem; color: var(--gray); font-size: 1rem; line-height: 2;">
+            <p><i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 0.5rem;"></i>KK 715 Street, Kigali, Rwanda</p>
+            <p><i class="fas fa-phone" style="color: var(--accent); margin-right: 0.5rem;"></i>Tel: (+250) 780092417</p>
+            <p><i class="fab fa-whatsapp" style="color: var(--accent); margin-right: 0.5rem;"></i>WhatsApp: (+250) 782551311</p>
+            <p><i class="fas fa-envelope" style="color: var(--accent); margin-right: 0.5rem;"></i>Email: divin2250@gmail.com</p>
+          </div>
+          <div class="social-links">
+            <a href="mailto:divin2250@gmail.com" class="social-link" title="Email">
+              <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://github.com/Pro-divin" target="_blank" class="social-link" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://wa.me/250782551311" target="_blank" class="social-link" title="WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="tel:+250780092417" class="social-link" title="Phone">
+              <i class="fas fa-phone"></i>
+            </a>
+          </div>
+          
+          <!-- Contact Form -->
+         <form action="https://formspree.io/f/your-form-id" method="POST" id="contactForm">
+            <div style="margin-bottom: 1.5rem;">
+              <label for="name" style="display: block; margin-bottom: 0.5rem; color: var(--gray);">Your Name</label>
+              <input type="text" id="name" name="name" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(100, 116, 139, 0.3); background: rgba(30, 41, 59, 0.5); color: var(--light);">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label for="email" style="display: block; margin-bottom: 0.5rem; color: var(--gray);">Your Email</label>
+              <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(100, 116, 139, 0.3); background: rgba(30, 41, 59, 0.5); color: var(--light);">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label for="message" style="display: block; margin-bottom: 0.5rem; color: var(--gray);">Your Message</label>
+              <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(100, 116, 139, 0.3); background: rgba(30, 41, 59, 0.5); color: var(--light);"></textarea>
+            </div>
+            <button type="submit" style="background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 30px; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; <span id="year"></span> Murenzi Divin. All intellectual property protected.</p>
+      <p class="footer-accent">Secure Code. Robust Systems. Engineered Excellence.</p>
+    </footer>
+  </div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set current year
+      document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const navLinks = document.getElementById('navLinks');
+      
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+          '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+      });
+      
+      // Close mobile menu when clicking a link
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+      });
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // Back to top button
+      const backToTopBtn = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+      
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Animate sections on scroll
+      const animateOnScroll = () => {
+        const sections = document.querySelectorAll('section');
+        const windowHeight = window.innerHeight;
+        
+        sections.forEach(section => {
+          const sectionPos = section.getBoundingClientRect().top;
+          if (sectionPos < windowHeight * 0.75) {
+            section.style.opacity = '1';
+          }
+        });
+      };
+      
+      window.addEventListener('scroll', animateOnScroll);
+      animateOnScroll(); // Run once on load
+      
+      // Terminal typing effect
+      const terminalLines = document.querySelectorAll('.terminal-line');
+      terminalLines.forEach((line, index) => {
+        line.style.animationDelay = `${index * 0.3 + 0.5}s`;
+      });
+      
+      // Add blinking cursor to last terminal line
+      const lastTerminalLine = document.querySelector('.terminal-line:last-child .terminal-command');
+      const cursor = document.createElement('span');
+      cursor.className = 'terminal-cursor';
+      lastTerminalLine.appendChild(cursor);
+      
+      // Form submission
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          // Get form values
+          const name = document.getElementById('name').value;
+          const email = document.getElementById('email').value;
+          const message = document.getElementById('message').value;
+          
+          // Here you would typically send the form data to a server
+          // For demonstration, we'll just show an alert
+          alert(`Thank you, ${name}! Your message has been sent. I'll get back to you soon at ${email}.`);
+          
+          // Reset the form
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
